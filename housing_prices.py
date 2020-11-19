@@ -5,6 +5,7 @@ import seaborn as sns
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
 
+### EDA
 ## Import data and merge train and test for preprocessing
 # Import import train and test data as df
 df_train = pd.read_csv('train.csv')
@@ -31,7 +32,8 @@ df_full.info()
 df_full.describe()
 df_full.head()
 
-## Inspect some features that seem to be categorical but are numerical in the data
+## Inspect some features that seem to be categorical due to their description but are numerical in the data
+
 
 # MSSubClass
 df_full['MSSubClass'].value_counts()
@@ -60,7 +62,7 @@ y_train = df_train['SalePrice'].values
 X_test = df_test.drop(['Id', 'SalePrice'], axis = 1).values
 y_test = df_test['SalePrice'].values
 
-
+### Analysis
 
 
 
