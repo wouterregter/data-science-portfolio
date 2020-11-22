@@ -3,10 +3,14 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.impute import SimpleImputer
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import SimpleImputer, IterativeImputer
 from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.preprocessing import StandardScaler
+
 
 ### EDA
+
 
 ## Import the data and merge train and test for preprocessing
 
@@ -28,14 +32,19 @@ n_test = df_test.shape[0]
 
 y_train = df_train["SalePrice"] # set y_train so it can be dropped
 df_full = pd.concat([df_train,df_test], axis = 0) # merge train and test to df_full
-# drop SalePrice from df_full so it can still be used in EDA of df_train
+# drop SalePrice from df_full instead of df_train so it can still be used in EDA of df_train
 df_full = df_full.drop('SalePrice', axis = 1)
 
-## Inspect the dataset
+## Inspect the train dataset
+
+# Inspect target
+sns.distplot(y_train)
+plt.style.use('ggplot')
+plt.show()
 
 # Inspect structure
 df_train.columns
-df_train.info()
+#df_train.info()
 df_train.describe()
 df_train.head()
 
@@ -43,7 +52,12 @@ df_train.head()
 corrmat = df_train.corr()
 f, ax = plt.subplots(figsize = (12, 9))
 sns.heatmap(corrmat, vmax = 0.85);
-plt.show()
+
+# Print highest correlations with target
+df_train.corr()["SalePrice"].sort_values(ascending = False).head(20)
+
+# Log-transforming the target variable for normality
+y_train = np.log1p(y_train)
 
 # Dropping variables due to high multicollinearity
 # Dropping GarageCars because of high multicollinearity with GarageArea
@@ -65,14 +79,39 @@ df_full['YrSold'] = df_full['YrSold'].apply(str)
 ## Missing data
 
 # Check for missing values
+rel = (df_full.isnull().sum()/df_full.values.shape[0])
+rel.sort_values(ascending = False).head(20)
+
+# Drop variables with > 20% missing
+df_full = df_full.drop(['PoolQC','MiscFeature','Alley','Fence','FireplaceQu'], axis = 1)
+
+# Check for missing values
 df_full.isna().sum().sum()
-# Impute missing values
+
+# Set the string and numerical columns
+string_cols = df_full.select_dtypes(include='object').columns
+num_cols = df_full.select_dtypes(exclude='object').columns
+df_full_cols = df_full.columns
+
+# Impute categorical values with most frequent
 imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent') # instantiate imputer
-imp.fit(df_full) # fit imputer
-df_full = imp.transform(df_full) # impute means
-df_full = pd.DataFrame(df_full)
+imp.fit(df_full[string_cols]) # fit imputer
+df_full[string_cols] = imp.transform(df_full[string_cols])# impute values
+
+# Impute numerical values using IterativeImputer
+it_imp = IterativeImputer(random_state=0) # instantiate imputer
+it_imp.fit(df_full[num_cols]) # fit imputer
+df_full[num_cols] = it_imp.transform(df_full[num_cols])# impute values
+
+# Put the array back in a df using the correct column names
+df_full = pd.DataFrame(df_full, columns=df_full_cols)
 
 ## Final steps
+
+# Scale and center
+scaler = StandardScaler()
+scaler.fit(df_full[num_cols])
+df_full[num_cols] = scaler.transform(df_full[num_cols])
 
 # Get dummies for categorical variables
 df_full = pd.get_dummies(df_full)
@@ -81,17 +120,19 @@ df_full = pd.get_dummies(df_full)
 X_train = df_full[:n_train].values
 X_test = df_full[n_train:].values
 
+
 ### Analysis
 
-#OLS Regression
+
+# OLS Regression
 reg = LinearRegression()
 reg.fit(X_train, y_train)
 y_pred = reg.predict(X_test)
 
-#
+# Ridge Regression
 ridge = Ridge()
-reg.fit(X_train, y_train)
-y_pred = reg.predict(X_test)
+ridge.fit(X_train, y_train)
+# y_pred = reg.predict(X_test)
 
 my_submission = pd.DataFrame({'Id': id_test, 'SalePrice': y_pred})
 # you could use any filename. We choose submission here
