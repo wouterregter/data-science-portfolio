@@ -1,12 +1,7 @@
 ## Import libraries
 import pandas as pd
 import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.experimental import enable_iterative_imputer
-from sklearn.impute import SimpleImputer, IterativeImputer
-from sklearn.linear_model import LinearRegression, Ridge, Lasso
-from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.impute import SimpleImputer
 
 ## Import the data and merge train and test for preprocessing
 
@@ -15,18 +10,18 @@ df_train = pd.read_csv('train.csv')
 df_test = pd.read_csv('test.csv')
 
 # Save train and test ids so they can be dropped
-id_train = df_train["Id"].values
-id_test = df_test["Id"].values
+id_train = df_train['Id'].values
+id_test = df_test['Id'].values
 
 # Drop the id columns
-df_train = df_train.drop("Id", axis = 1)
-df_test = df_test.drop("Id", axis = 1)
+df_train = df_train.drop('Id', axis = 1)
+df_test = df_test.drop('Id', axis = 1)
 
 # Save the length of the train and test dfs for later reconstruction
 n_train = df_train.shape[0]
 n_test = df_test.shape[0]
 
-y_train = df_train["SalePrice"].values # set y_train so it can be dropped
+y_train = df_train['SalePrice'] # set y_train so it can be dropped
 df_full = pd.concat([df_train,df_test], axis = 0) # merge train and test to df_full
 # drop SalePrice from df_full instead of df_train so it can still be used in EDA of df_train
 df_full = df_full.drop('SalePrice', axis = 1)
@@ -50,20 +45,17 @@ f, ax = plt.subplots(figsize = (12, 9))
 sns.heatmap(corrmat, vmax = 0.85);
 
 # Print highest correlations with target
-df_train.corr()["SalePrice"].sort_values(ascending = False).head(20)
-
-# Log-transforming the target variable for normality
-y_train = np.log1p(y_train)
+df_train.corr()['SalePrice'].sort_values(ascending = False).head(20)
 
 # Dropping variables due to high multicollinearity
-# Dropping GarageCars because of high multicollinearity with GarageArea
-df_full = df_full.drop("GarageCars", axis = 1)
+# Dropping GarageArea because of high multicollinearity with GarageCars
+df_full = df_full.drop('GarageArea', axis = 1)
 # Dropping GarageYrBlt because of high multicollinearity with YearBuilt
-df_full = df_full.drop("GarageYrBlt", axis = 1)
+df_full = df_full.drop('GarageYrBlt', axis = 1)
 # Dropping TotRmsAbvGrd because of high multicollinearity with GrLivArea
-df_full = df_full.drop("TotRmsAbvGrd", axis = 1)
+df_full = df_full.drop('TotRmsAbvGrd', axis = 1)
 # Dropping 1stFlrSF because of high multicollinearity with TotalBsmtSF
-df_full = df_full.drop("1stFlrSF", axis = 1)
+df_full = df_full.drop('1stFlrSF', axis = 1)
 
 # Convert some categorical features to strings that are numerical in the data
 df_full['MSSubClass'] = df_full['MSSubClass'].apply(str)
@@ -76,31 +68,20 @@ df_full['YrSold'] = df_full['YrSold'].apply(str)
 
 # Check for missing values
 rel = (df_full.isnull().sum()/df_full.values.shape[0])
-rel.sort_values(ascending = False).head(20)
+rel = rel.sort_values(ascending = False).head(20)
+morethan20 = rel[rel > 0.20].index
+# Drop variables with > 20% missing values
+df_full = df_full.drop(morethan20, axis = 1)
 
-# Drop variables with > 20% missing
-df_full = df_full.drop(['PoolQC','MiscFeature','Alley','Fence','FireplaceQu'], axis = 1)
+df_full_cols = df_full.columns
+# Impute categorical values with most frequent
+imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent') # instantiate imputer
+imp.fit(df_full) # fit imputer
+df_full = imp.transform(df_full)# impute values
+df_full = pd.DataFrame(df_full, columns=df_full_cols)
 
 # Check for missing values
 df_full.isna().sum().sum()
-
-# Set the string and numerical columns
-string_cols = df_full.select_dtypes(include='object').columns
-num_cols = df_full.select_dtypes(exclude='object').columns
-df_full_cols = df_full.columns
-
-# Impute categorical values with most frequent
-imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent') # instantiate imputer
-imp.fit(df_full[string_cols]) # fit imputer
-df_full[string_cols] = imp.transform(df_full[string_cols])# impute values
-
-# Impute numerical values using IterativeImputer
-it_imp = IterativeImputer(random_state=0) # instantiate imputer
-it_imp.fit(df_full[num_cols]) # fit imputer
-df_full[num_cols] = it_imp.transform(df_full[num_cols])# impute values
-
-# Put the array back in a df using the correct column names
-df_full = pd.DataFrame(df_full, columns=df_full_cols)
 
 ## Final steps
 

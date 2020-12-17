@@ -82,7 +82,7 @@ rel.sort_values(ascending = False).head(20)
 
 # Drop variables with > 20% missing values
 df_full = df_full.drop(['PoolQC','MiscFeature','Alley','Fence','FireplaceQu'], axis = 1)
-
+df_full_cols = df_full.columns
 # Impute categorical values with most frequent
 imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent') # instantiate imputer
 imp.fit(df_full) # fit imputer
