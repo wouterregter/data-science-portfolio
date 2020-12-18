@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.tree import DecisionTreeRegressor, plot_tree
 from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.svm import SVR
 from sklearn.preprocessing import RobustScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import r2_score
@@ -77,7 +78,7 @@ ridge_tuned_score = cross_val_score(ridge_tuned, X_train, y_train, cv=5).mean()
 ridge_tuned.fit(X_train, y_train)
 y_pred = ridge_tuned.predict(X_test)
 
-# Decision Tree
+## Decision Tree
 dt = DecisionTreeRegressor(max_depth=5)
 cross_val_score(dt, X_train, y_train, scoring='explained_variance', cv=5).mean()
 
@@ -86,9 +87,23 @@ plt.style.use('ggplot')
 plot_tree(dt)
 plt.show()
 
-# Extreme Gradient Boosting
-xg_reg = xgb.XGBRegressor(objective='reg:squarederror',seed=123,n_estimators=10)
-xgb.cv(X_train)
+## Extreme Gradient Boosting
+
+xgb_reg = xgb.XGBRegressor(max_depth=3, n_estimators=200)
+xgb_reg_score = cross_val_score(xg_reg, X_train, y_train, cv=3).mean()
+
+## Support Vector Regression
+
+svr_pipe = make_pipeline(RobustScaler(), SVR())
+svr_score = cross_val_score(svr_pipe, X_train, y_train, cv=4).mean()
+
+
+# Plot the first tree
+xgb_reg.fit(X_train, y_train)
+xgb.plot_tree(xgb_reg, num_trees=20)
+plt.show()
+
+
 
 # Reverse log transform if y_train was log transformed
 y_pred = np.expm1(y_pred)
