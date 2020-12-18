@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
 
-def preprocess(training_set, test_set, log_y=False, drop_cols=[], num_conv_cols=[]):
+def preprocess(training_set, test_set, log_y=False, drop_cols=[], makestr_cols=[]):
     # Drop the id columns
     df_train = training_set.drop('Id', axis=1)
     df_test = test_set.drop('Id', axis=1)
@@ -17,9 +17,9 @@ def preprocess(training_set, test_set, log_y=False, drop_cols=[], num_conv_cols=
     if log_y:
         y_train = np.log1p(y_train)
     # Dropping variables in drop_list
-    df_full = df_full.drop(drop_list, axis=1)
+    df_full = df_full.drop(drop_cols, axis=1)
     # Convert some categorical features to strings that are numerical in the data
-    for col in num_conv_cols:
+    for col in makestr_cols:
         df_full[col] = df_full[col].apply(str)
     # Missing Data
     rel = (df_full.isnull().sum() / df_full.values.shape[0])
@@ -34,7 +34,8 @@ def preprocess(training_set, test_set, log_y=False, drop_cols=[], num_conv_cols=
     df_full = pd.DataFrame(df_full, columns=df_full_cols)
     # Get dummies for categorical variables
     df_full = pd.get_dummies(df_full)
+    df_columns = df_full.columns
     # Reconstruct train and test
     X_train = df_full[:n_train].values
     X_test = df_full[n_train:].values
-    return X_train, y_train, X_test
+    return X_train, y_train, X_test, df_columns
