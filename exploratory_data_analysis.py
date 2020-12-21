@@ -1,9 +1,9 @@
-## Import libraries
+# Import modules
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.impute import SimpleImputer
-
-## Import the data and merge train and test for preprocessing
 
 # Import import train and test data
 df_train = pd.read_csv('train.csv')
@@ -13,6 +13,12 @@ df_test = pd.read_csv('test.csv')
 id_train = df_train['Id'].values
 id_test = df_test['Id'].values
 
+# Check for outliers
+df_train.plot.scatter(x='GrLivArea', y='SalePrice')
+plt.show()
+# Delete two extreme outliers
+df_train = df_train.drop(df_train[(df_train.GrLivArea > 4000) & (df_train.SalePrice < 200000)].index)
+
 # Drop the id columns
 df_train = df_train.drop('Id', axis = 1)
 df_test = df_test.drop('Id', axis = 1)
@@ -21,12 +27,11 @@ df_test = df_test.drop('Id', axis = 1)
 n_train = df_train.shape[0]
 n_test = df_test.shape[0]
 
-y_train = df_train['SalePrice'] # set y_train so it can be dropped
+# Set y_train and and merge the training and test set
+y_train = df_train['SalePrice']
 df_full = pd.concat([df_train,df_test], axis = 0) # merge train and test to df_full
-# drop SalePrice from df_full instead of df_train so it can still be used in EDA of df_train
+# Drop target
 df_full = df_full.drop('SalePrice', axis = 1)
-
-## Inspect the train dataset
 
 # Inspect target
 sns.distplot(y_train)
@@ -47,7 +52,6 @@ sns.heatmap(corrmat, vmax = 0.85);
 # Print highest correlations with target
 df_train.corr()['SalePrice'].sort_values(ascending = False).head(20)
 
-# Dropping variables due to high multicollinearity
 # Dropping GarageArea because of high multicollinearity with GarageCars
 df_full = df_full.drop('GarageArea', axis = 1)
 # Dropping GarageYrBlt because of high multicollinearity with YearBuilt
@@ -64,26 +68,31 @@ df_full['OverallCond'] = df_full['OverallCond'].apply(str)
 df_full['MoSold'] = df_full['MoSold'].apply(str)
 df_full['YrSold'] = df_full['YrSold'].apply(str)
 
-## Missing data
-
 # Check for missing values
 rel = (df_full.isnull().sum()/df_full.values.shape[0])
-rel = rel.sort_values(ascending = False).head(20)
-morethan20 = rel[rel > 0.20].index
-# Drop variables with > 20% missing values
-df_full = df_full.drop(morethan20, axis = 1)
+rel.sort_values(ascending = False).head(20)
 
+# Changing NA's of features that are described in the data information as 'None'
+none_features = ['PoolQC', 'MiscFeature', 'Alley', 'Fence', 'FireplaceQu']
+for feature in none_features:
+    df_full[feature] = df_full[feature].fillna("None")
+
+# Save the column names
 df_full_cols = df_full.columns
+# Set categorical and non categorical columns
+categorical_columns = df_full.columns[df_full.dtypes == object]
+non_categorical_columns = df_full.columns[~(df_full.dtypes == object)]
 # Impute categorical values with most frequent
-imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent') # instantiate imputer
-imp.fit(df_full) # fit imputer
-df_full = imp.transform(df_full)# impute values
+imp1 = SimpleImputer(missing_values=np.nan, strategy='most_frequent') # instantiate imputer
+df_full[categorical_columns] = imp1.fit_transform(df_full[categorical_columns]) # impute values
+# Impute numerical values with median
+imp2 = SimpleImputer(missing_values=np.nan, strategy='median') # instantiate imputer
+df_full[non_categorical_columns] = imp2.fit_transform(df_full[non_categorical_columns]) # impute values
+# Put the results back into a dataframe
 df_full = pd.DataFrame(df_full, columns=df_full_cols)
 
-# Check for missing values
+# Check for missing values again
 df_full.isna().sum().sum()
-
-## Final steps
 
 # Get dummies for categorical variables
 df_full = pd.get_dummies(df_full)

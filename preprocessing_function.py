@@ -6,12 +6,15 @@ def preprocess(training_set, test_set, log_y=False, drop_cols=[], makestr_cols=[
     # Drop the id columns
     df_train = training_set.drop('Id', axis=1)
     df_test = test_set.drop('Id', axis=1)
+    # Deleting outliers
+    df_train = df_train.drop(df_train[(df_train.GrLivArea > 4000) & (df_train.SalePrice < 200000)].index)
     # Save the length of the train and test dfs for later reconstruction
     n_train = df_train.shape[0]
     n_test = df_test.shape[0]
-    y_train = df_train['SalePrice'] # set y_train so it can be dropped
-    df_full = pd.concat([df_train, df_test], axis=0)  # merge train and test to df_full
-    # drop SalePrice from df_full instead of df_train so it can still be used in EDA of df_train
+    # Set target to y_train
+    y_train = df_train['SalePrice']
+    df_full = pd.concat([df_train, df_test], axis=0)
+    # Drop target
     df_full = df_full.drop('SalePrice', axis=1)
     # Log-transforming the target variable for normality
     if log_y:
@@ -21,16 +24,21 @@ def preprocess(training_set, test_set, log_y=False, drop_cols=[], makestr_cols=[
     # Convert some categorical features to strings that are numerical in the data
     for col in makestr_cols:
         df_full[col] = df_full[col].apply(str)
-    # Missing Data
-    rel = (df_full.isnull().sum() / df_full.values.shape[0])
-    morethan20 = rel[rel > 0.20].index
-    # Drop variables with > 20% missing values
-    df_full = df_full.drop(morethan20, axis=1)
+    # Changing NA's of features that are described in the data information as 'None'
+    ['PoolQC', 'MiscFeature', 'Alley', 'Fence', 'FireplaceQu']
+    for feature in none_features:
+        df_full[feature] = df_full[feature].fillna("None")
+    # Set categorical and non categorical columns
     df_full_cols = df_full.columns
+    categorical_columns = df_full.columns[df_full.dtypes == object]
+    non_categorical_columns = df_full.columns[~(df_full.dtypes == object)]
     # Impute categorical values with most frequent
-    imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent')  # instantiate imputer
-    imp.fit(df_full)  # fit imputer
-    df_full = imp.transform(df_full)  # impute values
+    imp1 = SimpleImputer(missing_values=np.nan, strategy='most_frequent')  # instantiate imputer
+    df_full[categorical_columns] = imp1.fit_transform(df_full[categorical_columns])  # impute values
+    # Impute numerical values with median
+    imp2 = SimpleImputer(missing_values=np.nan, strategy='median')  # instantiate imputer
+    df_full[non_categorical_columns] = imp2.fit_transform(df_full[non_categorical_columns])  # impute values
+    # Put the results back into a dataframe
     df_full = pd.DataFrame(df_full, columns=df_full_cols)
     # Get dummies for categorical variables
     df_full = pd.get_dummies(df_full)
