@@ -19,7 +19,7 @@ df_test = pd.read_csv('test.csv')
 drop_cols = ['GarageArea', 'GarageYrBlt', 'TotRmsAbvGrd', '1stFlrSF'] # High multicolinearity
 makestr_cols = ['MSSubClass', 'OverallQual', 'OverallCond', 'MoSold', 'YrSold'] # Need to converted to string
 X_train, y_train, X_test, df_columns = preprocess(training_set=df_train, test_set=df_test, log_y=True,
-                                                  makestr_cols=makestr_cols)
+                                                  drop_cols=drop_cols, makestr_cols=makestr_cols)
 
 
 ## OLS Regression
