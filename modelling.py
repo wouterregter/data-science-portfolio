@@ -19,7 +19,7 @@ df_test = pd.read_csv('test.csv')
 drop_cols = ['GarageArea', 'GarageYrBlt', 'TotRmsAbvGrd', '1stFlrSF'] # High multicolinearity
 makestr_cols = ['MSSubClass', 'OverallQual', 'OverallCond', 'MoSold', 'YrSold'] # Need to converted to string
 X_train, y_train, X_test, df_columns = preprocess(training_set=df_train, test_set=df_test, log_y=True,
-                                                  drop_cols=drop_cols, makestr_cols=makestr_cols)
+                                                  makestr_cols=makestr_cols)
 
 
 ## OLS Regression
@@ -34,14 +34,12 @@ reg_cv_scores.mean()
 ## Lasso Regression
 
 
-# Reverse log-transform y_train
-y_train = np.expm1(y_train)
 # Set up the regressor pipeline
 lasso_pipe = make_pipeline(RobustScaler(), Lasso())
 # Set the paramater space for tuning
-lasso_param_grid = {'lasso__alpha': [100, 130, 160]}
+lasso_param_grid = {'lasso__alpha': [0.0006, 0.0005, 0.0004]}
 # Tune alpha using GridSearchCV
-lasso_gs = GridSearchCV(lasso_pipe, lasso_params, cv=3)
+lasso_gs = GridSearchCV(lasso_pipe, lasso_param_grid, cv=3)
 # Fit to the training data
 lasso_gs.fit(X_train, y_train)
 # Evaluate performance
@@ -49,11 +47,13 @@ lasso_gs.cv_results_
 lasso_gs.best_params_
 lasso_gs.best_score_
 # Make tuned pipeline for faster use
-lasso_tuned = make_pipeline(RobustScaler(), Lasso(alpha = 100))
-lasso_tuned_score = cross_val_score(lasso_tuned,X_train,y_train,cv=3).mean()
+lasso_tuned = make_pipeline(RobustScaler(), Lasso(alpha = 0.0005))
+lasso_tuned.fit(X_train, y_train)
+lasso_tuned_score = cross_val_score(lasso_tuned,X_train,y_train,
+                                    cv=3,scoring='neg_root_mean_squared_error').mean()
+y_pred = lasso_tuned.predict(X_test)
 
 # Visualize first 10 features (just for practice)
-lasso_tuned.fit(X_train, y_train)
 lasso_coef = lasso_tuned[1].coef_
 plt.plot(range(10), lasso_coef[:10])
 plt.xticks(range(10), df_columns[:10], rotation=60)
