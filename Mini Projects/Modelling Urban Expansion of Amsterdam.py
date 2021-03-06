@@ -28,7 +28,7 @@ class MyFirstModel(DynamicModel):
     BirthA = pcrand(numberOfAliveNeighbours == 5, pcrnot(self.alive))
     BirthB = pcrand(numberOfAliveNeighbours == 6, pcrnot(self.alive))
 
-    self.alive = SurvivalA | SurvivalB | SurvivalC | SurvivalD | SurvivalE | SurvivalF | SurvivalG | SurvivalH | SurvivalI | BirthA | BirthB #| BirthC #
+    self.alive = SurvivalA | SurvivalB | SurvivalC | SurvivalD | SurvivalE | SurvivalF | SurvivalG | SurvivalH | SurvivalI | BirthA | BirthB
     self.report(self.alive, 'alive')
 
 nrOfTimeSteps=30
