@@ -10,5 +10,5 @@
 		- Comparing Series Release Strategies: Examining which release strategy produces more positive discussions on Reddit: releasing all episodes at once or on a weekly basis.
 
 - ## R
-	- Examining Crowdsourcing Platform Behaviour: An analysis of whether task sequencing (a concept from cognitive psychology) impacts members of crowdsourcing platforms to participate in more complex tasks on the LEGO Ideas crowdsourcing platform using generized linear models (GLM).
+	- Examining Crowdsourcing Platform Behaviour: An analysis of how task sequencing (a concept from cognitive psychology) impacts members of crowdsourcing platforms to participate in more complex tasks on the LEGO Ideas crowdsourcing platform using generized linear models (GLM).
 
