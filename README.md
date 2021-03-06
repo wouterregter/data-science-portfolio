@@ -11,7 +11,7 @@
 		- Examining Gender Bias in Song Lyrics: Comparing and examining gender bias in song lyrics of 160.856 songs of the genres Hip-Hop and Electronic by using Word2Vec.
 		- Comparing Series Release Strategies: Examining which release strategy produces more positive discussions on Reddit: releasing all episodes at once or on a periodic basis.
 	- ### Spatial Data
-		- Modelling Urban Expansion of Amsterdam. A simple cellular automata model that predicts land-use change and urban expansion of Amsterdam using a binary green/built-up area rastermap.
+		- Modelling Urban Expansion of Amsterdam. A simple cellular automata model that simulates land-use change and urban expansion of Amsterdam using a binary  rastermap indicating wheter a cell is built up area or not.
 
 ## R
 - Examining Crowdsourcing Platform Behaviour: An analysis of how task sequencing (a concept from cognitive psychology) impacts members of crowdsourcing platforms to participate in more complex tasks on the LEGO Ideas crowdsourcing platform using generized linear models (GLM).
