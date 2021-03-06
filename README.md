@@ -14,5 +14,5 @@
 		- Modelling Urban Expansion of Amsterdam. A simple cellular automata model that predicts land-use change and urban expansion of Amsterdam using a binary green/built-up area rastermap.
 
 ## R
-	- Examining Crowdsourcing Platform Behaviour: An analysis of how task sequencing (a concept from cognitive psychology) impacts members of crowdsourcing platforms to participate in more complex tasks on the LEGO Ideas crowdsourcing platform using generized linear models (GLM).
+- Examining Crowdsourcing Platform Behaviour: An analysis of how task sequencing (a concept from cognitive psychology) impacts members of crowdsourcing platforms to participate in more complex tasks on the LEGO Ideas crowdsourcing platform using generized linear models (GLM).
 
