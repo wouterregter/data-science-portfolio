@@ -9,3 +9,5 @@ train.csv
 *.png
 *.xlsx
 *.Rproj
+*.Rmd
+*.Rmd
