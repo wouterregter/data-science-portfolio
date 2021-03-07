@@ -3,7 +3,7 @@
 
 ## Python
 
-- [Kaggle House Prices]: Kaggle competition with the aim of predicting house prices in Ames, Iowa based on 79 features. The analysis includes feature engeneering, advanced regression models like Random Forest and hyperparameter tuning.
+- [**Kaggle House Prices**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Housing%20Prices/Kaggle%20House%20Prices.ipynb): Kaggle competition with the aim of predicting house prices in Ames, Iowa based on 79 features. The analysis includes feature engeneering, advanced regression models like Random Forest and hyperparameter tuning.
 
 - ### Mini Projects 
 	- ### NLP
