@@ -196,11 +196,6 @@ fin %>%
   theme(text = element_text(size=25))
 theme_light()
 
-#Scatterplot
-fin %>%
-  ggplot(aes(y = ProP2_ContrCnt, x = Tenure + Attention + Appreciation + ActP1_ContrCnt + ConP1_ContrCnt + ProP1_ContrCnt)) +
-  geom_point()
-
 #Freq Plot
 fin %>%
   ggplot(aes(ActP1_ContrCnt)) +

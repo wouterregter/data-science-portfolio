@@ -5,3 +5,7 @@ test.csv
 train.csv
 /submission.csv
 *.csv
+.Rproj.user
+*.png
+*.xlsx
+*.Rproj
