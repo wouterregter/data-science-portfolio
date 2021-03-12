@@ -3,7 +3,7 @@
 
 ## Python
 
-- [**Kaggle: Customer Transaction Prediction¶**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Customer%20Transaction%20Prediction/Kaggle%20Customer%20Transaction%20Prediction.ipynb): The goal of this project is predict which customers of Santander will make a specific transaction in the future. In this classification project, I cover both feature engineering and modelling. Because of the large dataset I applied a support vector classifier with kernel approximation using stochastic gradient descent learning and a LightGBM model.
+- [**Kaggle: Customer Transaction Prediction¶**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Customer%20Transaction%20Prediction/Kaggle%20Customer%20Transaction%20Prediction.ipynb): The goal of this project is predict which customers of Santander will make a specific transaction in the future. In this classification project, I cover both feature engineering and modelling. Because of the large dataset I trained a support vector classifier with kernel approximation using stochastic gradient descent learning and a LightGBM model.
 
 - [**Kaggle: House Prices**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Housing%20Prices/Kaggle%20House%20Prices.ipynb): Kaggle competition with the aim of predicting house prices based on 79 features describing many of the aspects of residential homes in Ames, Iowa. The analysis includes feature engineering, advanced regression models like Random Forest and XGBoost, and hyperparameter tuning.
 
