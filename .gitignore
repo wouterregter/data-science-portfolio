@@ -11,3 +11,8 @@ train.csv
 *.Rproj
 *.Rmd
 *.Rmd
+*.jpg
+Vaccine Sentiment Modelling/.ipynb_checkpoints/Vaccine_Sentiment_Modelling (1)-checkpoint.ipynb
+Vaccine Sentiment Modelling/.ipynb_checkpoints/Vaccine_Sentiment_Modelling-checkpoint.ipynb
+Vaccine Sentiment Modelling/.ipynb_checkpoints/Vaccine_Sentiment_Modelling_(1)-checkpoint.ipynb
+*.pdf
