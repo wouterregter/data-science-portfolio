@@ -7,6 +7,7 @@
 
 - [**Kaggle: House Prices**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Housing%20Prices/Kaggle%20House%20Prices.ipynb): Kaggle competition with the aim of predicting house prices based on 79 features describing many of the aspects of residential homes in Ames, Iowa. The analysis includes feature engineering, advanced regression models like Random Forest and XGBoost, and hyperparameter tuning.
 
+- [**Vaccine Sentiment Analysis**](https://github.com/wouterregter/data_science_portfolio/blob/master/Vaccine%20Sentiment%20Modelling/Vaccine%20Sentiment%20Analysis.ipynb): NLP project with the objective to uncover the most discussed topics of anti-vaccine tweets and pro-vaccine tweets in dataset of over 200k vaccine related tweets. To do this, a random sample of 1750 tweets were labeled manually and were used to build a transformers text classifier to predict the rest of the tweets. Subsequently, LDA topic modelling was used to examine the topics.
 
 - ### Mini Projects 
 	- ### NLP
