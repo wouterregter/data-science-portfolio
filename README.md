@@ -12,7 +12,7 @@
 - ### Mini Projects 
 	- ### NLP
 
-		- [**Classifying Political Tweets as Clickbait**](https://github.com/wouterregter/data_science_portfolio/blob/master/Mini%20Projects/Classifying%20News%20Articles%20as%20Clickbait.ipynb): Classifying and inspecting 23.448 tweets by 501 different U.S. senators mentioning news articles as clickbait/non-clickbait. This is done by training on a dataset of clickbait titles and predicting the dataset of tweets.
+		- [**Classifying Political Tweets as Clickbait**](https://github.com/wouterregter/data_science_portfolio/blob/master/Mini%20Projects/Classifying%20News%20Articles%20as%20Clickbait.ipynb): Classifying and inspecting 23.448 news article titles mentioned by 501 different U.S. senators as clickbait/non-clickbait. This is done by training on a dataset of clickbait titles and predicting the dataset of news article titles.
 
 		- [**Examining Gender Bias in Song Lyrics**](https://github.com/wouterregter/data_science_portfolio/blob/master/Mini%20Projects/Examining%20Gender%20Bias%20in%20Song%20Lyrics.ipynb): Comparing and examining gender bias in the song lyrics of Hip-Hop songs to the song lyrics of Electronic songs using Spacy and Word2Vec.
 
