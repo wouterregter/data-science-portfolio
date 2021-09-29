@@ -23,5 +23,6 @@
 
 ## R
 - [**Walmart Sales Forecasting & Causal Inference**](https://rpubs.com/wouterregter/815770): Exploring a dataset containing details of a Walmart Store, Forecasting Weekly Walmart Sales using ETS and SARIMA models and analyzing the causal relationship between Unemployment and Weekly Sales using the Granger Causality causal inference method.
+
 - [**Examining Crowdsourcing Platform Behaviour**](https://rpubs.com/wouterregter/735365): An analysis of how task sequencing (a concept from cognitive psychology) impacts members of crowdsourcing platforms to participate in more complex tasks on the LEGO Ideas crowdsourcing platform using generized linear models (GLM).
 
