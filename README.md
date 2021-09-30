@@ -3,11 +3,14 @@
 
 ## Python
 
+- [**Predicting Social Media Engagement**](https://github.com/wouterregter/data_science_portfolio/blob/master/Predicting%20Online%20Participation/Predicting%20Online%20Participation.ipynb): Project with the goal of predicting the social media engagement of televsion episodes based on episode characteristics and historical engagement and views. In addition, LDA topic modelling was used to generate potentially predictive features from the subtitles of the episodes. This project contains exploratory data analysis and preprocessing, text preprocessing and LDA topic modelling, and, regression model selection and tuning.
+
+- [**Vaccine Sentiment Analysis**](https://github.com/wouterregter/data_science_portfolio/blob/master/Vaccine%20Sentiment%20Modelling/Vaccine%20Sentiment%20Analysis.ipynb): NLP project with the objective to uncover the most discussed topics of anti-vaccine tweets and pro-vaccine tweets in dataset of over 200k vaccine related tweets. To do this, a random sample of 1750 tweets were labeled manually and were used to build a transformers text classifier to predict the rest of the tweets. Subsequently, LDA topic modelling was used to examine the topics.
+
 - [**Kaggle: Customer Transaction Prediction**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Customer%20Transaction%20Prediction/Kaggle%20Customer%20Transaction%20Prediction.ipynb): The goal of this project is predict which customers of Santander will make a specific transaction in the future. In this classification project, I cover both feature engineering and modelling. Because of the large dataset I trained a support vector classifier with kernel approximation using stochastic gradient descent learning and a LightGBM model.
 
 - [**Kaggle: House Prices**](https://github.com/wouterregter/data_science_portfolio/blob/master/Kaggle%20Housing%20Prices/Kaggle%20House%20Prices.ipynb): Kaggle competition with the aim of predicting house prices based on 79 features describing many of the aspects of residential homes in Ames, Iowa. The analysis includes feature engineering, advanced regression models like Random Forest and XGBoost, and hyperparameter tuning.
 
-- [**Vaccine Sentiment Analysis**](https://github.com/wouterregter/data_science_portfolio/blob/master/Vaccine%20Sentiment%20Modelling/Vaccine%20Sentiment%20Analysis.ipynb): NLP project with the objective to uncover the most discussed topics of anti-vaccine tweets and pro-vaccine tweets in dataset of over 200k vaccine related tweets. To do this, a random sample of 1750 tweets were labeled manually and were used to build a transformers text classifier to predict the rest of the tweets. Subsequently, LDA topic modelling was used to examine the topics.
 
 - ### Mini Projects 
 	- ### NLP
