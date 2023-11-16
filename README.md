@@ -1,6 +1,6 @@
 # Data Science Portfolio by Wouter Regter 
 
-I worked on the projects in this portfolio while studying. These projects may give an indication of the topics and skills I learned during my studies but likely do not reflect my current proficiency in data science, because of everything I learned after my studies and the projects I was involved in while working.
+I worked on the projects in this portfolio while studying. These projects may give an indication of the topics and skills I learned during my studies but likely do not reflect my current proficiency in data science that was further developed while working.
 
 ## 2020-2021
 
