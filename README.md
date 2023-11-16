@@ -1,5 +1,7 @@
 # Data Science Portfolio by Wouter Regter 
 
+I worked on the projects in this portfolio while studying. These projects may give an indication of the topics and skills I learned during my studies by likely do not reflect my programming competency and learnings after my studies.
+
 ## 2020-2021
 
 - [**Predicting Social Media Engagement**](https://github.com/wouterregter/data_science_portfolio/blob/master/Predicting%20Online%20Participation/Predicting%20Online%20Participation.ipynb): Project with the goal of predicting the social media engagement of television episodes based on episode characteristics and historical engagement and views. In addition, LDA topic modelling was used to generate potentially predictive features from the subtitles of the episodes. This project contains exploratory data analysis and preprocessing, text preprocessing and LDA topic modelling, and, regression model selection and tuning.
